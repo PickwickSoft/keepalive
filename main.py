@@ -1,5 +1,5 @@
 import requests
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -15,9 +15,14 @@ async def root():
 
 
 @app.post("/alive/")
-async def alive(url: BaseUrl):
-    return callback(url.url)
+async def alive(url: BaseUrl, response: Response):
+    response.status_code = callback(url.url)
+    return response.status_code
 
 
 def callback(url: str):
-    return requests.get(url).status_code
+    try:
+        response = requests.get(url)
+    except requests.exceptions.RequestException:
+        return 400
+    return response.status_code
