@@ -7,10 +7,10 @@ This server helps you to automatically call your application's API, in order to 
 It is designed to work like that:
 ```mermaid
 sequenceDiagram
-    participant Application
+    participant Client
     participant Keep alive server
-    Application->>Keep alive server: Post request with Base URL
-    Keep alive server->>Application: Get request to Base URL
+    Client->>Keep alive server: Post request with Base URL
+    Keep alive server->>Client: Get request to Base URL
 ```
 
 ## How to use it
